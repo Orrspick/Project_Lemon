@@ -20,8 +20,12 @@ public class PlayerMove : MonoBehaviour
     void Update() //단발적인 키 입력
     {
         //점프
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !anim.GetBool("Player_jump"))
+        {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("Player_jump", true);
+        }
+
 
         // 키를 떗을떄 속도 감속
         if (Input.GetButtonUp("Horizontal")) {
@@ -50,5 +54,21 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
         else if (rigid.velocity.x < maxSpeed*(-1)) //왼쪽 최대 속도 제한
             rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
+
+        // 착지 플렛폼
+        if(rigid.velocity.y < 0)
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 0.5f) { 
+                    anim.SetBool("Player_jump", false);
+                }
+                // 바닥착지 확인
+                //Debug.Log(rayHit.collider.name);
+            }
+        }
     }
 }

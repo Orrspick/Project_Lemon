@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 337164675}
   - component: {fileID: 337164674}
   - component: {fileID: 337164676}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Simple_Sprites_31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 625206527}
   - component: {fileID: 625206529}
   - component: {fileID: 625206528}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Simple_Sprites_31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 722219919}
   - component: {fileID: 722219921}
   - component: {fileID: 722219920}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Simple_Sprites_30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,9 +579,10 @@ GameObject:
   - component: {fileID: 826579367}
   - component: {fileID: 826579371}
   - component: {fileID: 826579372}
+  - component: {fileID: 826579373}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,12 +602,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 2
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.82
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &826579368
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -692,7 +693,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826579366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.11, y: -0.42, z: 0}
+  m_LocalPosition: {x: -4.09, y: 2.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -731,6 +732,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 2.87
   jumpPower: 12
+--- !u!70 &826579373
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826579366}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 0.699999}
+  m_Direction: 0
 --- !u!1 &1360371389
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,7 +759,7 @@ GameObject:
   - component: {fileID: 1360371390}
   - component: {fileID: 1360371392}
   - component: {fileID: 1360371391}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Simple_Sprites_29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
