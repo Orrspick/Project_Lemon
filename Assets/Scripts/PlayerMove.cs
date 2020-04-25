@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
     void Update() //단발적인 키 입력
     {
         //점프
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("Player_jump"))
+        if (Input.GetButton("Jump") && !anim.GetBool("Player_jump"))
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("Player_jump", true);
@@ -33,7 +33,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         //스프라이트 플립 변경
-        if(Input.GetButtonDown("Horizontal")) {
+        if(Input.GetButton("Horizontal")) {
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
 
