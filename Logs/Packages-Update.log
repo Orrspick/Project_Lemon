@@ -45,3 +45,10 @@ The following packages were 추가됨:
   com.unity.ugui@1.0.0
 The following packages were 업데이트됨:
   com.unity.2d.animation 3.1.1 버전에서 3.2.1버전으로  com.unity.2d.psdimporter 2.1.0 버전에서 2.1.3버전으로  com.unity.2d.spriteshape 3.0.8 버전에서 3.0.10버전으로
+=== Mon May  4 14:04:46 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were 업데이트됨:
+  com.unity.ide.vscode 1.1.4 버전에서 1.2.0버전으로
