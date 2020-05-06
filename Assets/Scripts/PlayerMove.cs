@@ -71,4 +71,34 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
+
+    public void ButtonDown(string type)
+    {
+        switch (type)
+        {
+            case "J":
+                break;
+            case "C":
+                break;
+            case "L":
+                break;
+            case "R":
+                break;
+        }
+    }
+
+    public void ButtonUp(string type)
+    {
+        switch (type)
+        {
+            case "J":
+                break;
+            case "C":
+                break;
+            case "L":
+                break;
+            case "R":
+                break;
+        }
+    }
 }
