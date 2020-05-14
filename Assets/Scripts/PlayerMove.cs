@@ -9,6 +9,13 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigid; //리지드보디 불러오기
     SpriteRenderer spriteRenderer; // 스프라이트2D 제어
     Animator anim;
+   /* private int jumpCount = 0;
+    [SerializeField] int jumpMaxCount = 2;*/
+
+    // 버튼 환경용 변수 셋팅
+    public bool inputLeft = false;
+    public bool inputRight = false;
+    public bool inputJump = false;
 
     void Awake()
     {
@@ -17,25 +24,53 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+
     void Update() //단발적인 키 입력
     {
-        //점프
+        //점프 PC
         if (Input.GetButton("Jump") && !anim.GetBool("Player_jump"))
         {
+            inputJump = false;
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("Player_jump", true);
+        }
+
+        //점프 버튼
+        if (inputJump && !anim.GetBool("Player_jump"))
+        {
+            inputJump = false;
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("Player_jump", true);
         }
 
 
-        // 키를 떗을떄 속도 감속
+        // PC 키를 떗을떄 속도 감속
         if (Input.GetButtonUp("Horizontal")) {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
         }
 
-        //스프라이트 플립 변경
-        if(Input.GetButton("Horizontal")) {
+        // 버튼 키를 땟을때 속도 감속
+        if (inputLeft && inputRight)
+        {
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
+        }
+
+        // PC 스프라이트 플립 변경
+        if (Input.GetButton("Horizontal")) {
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
+
+        // 버튼 스프라이트 플립 변경
+        // 버튼 조작후 키보드 조작시 스프라이트 플립이 반대가 되는경우가 있는데 같은 사용하는 경우는 없으니 무시
+        if (inputLeft)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if(inputRight)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
 
         // 에니메이션
         if(Mathf.Abs(rigid.velocity.x) < 0.3)
@@ -46,9 +81,19 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate() //지속적인 키 입력
     {
-        //조작
+        //PC 조작
         float h = Input.GetAxisRaw("Horizontal");
         rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
+        //버튼 조작
+        if(inputLeft)
+        {
+            rigid.AddForce(Vector2.left , ForceMode2D.Impulse);
+        }
+        else if (inputRight)
+        {
+            rigid.AddForce(Vector2.right, ForceMode2D.Impulse);
+        }
 
         if (rigid.velocity.x > maxSpeed) //오른쪽 최대 속도 제한
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
@@ -72,33 +117,4 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    public void ButtonDown(string type)
-    {
-        switch (type)
-        {
-            case "J":
-                break;
-            case "C":
-                break;
-            case "L":
-                break;
-            case "R":
-                break;
-        }
-    }
-
-    public void ButtonUp(string type)
-    {
-        switch (type)
-        {
-            case "J":
-                break;
-            case "C":
-                break;
-            case "L":
-                break;
-            case "R":
-                break;
-        }
-    }
 }
