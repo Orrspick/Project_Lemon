@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject Game_menu;
     public GameObject Control_sets;
 
+    public bool inputMenu = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +22,9 @@ public class GameManager : MonoBehaviour
         /* timeScale 을 0으로 주면 일시정지(매뉴 활성화)
          * timeScale 을 1으로 주면 정지해제(매뉴 비활성화) */
 
-        if (Input.GetButtonDown("Cancel")) //PC 테스트
+        if (Input.GetButtonDown("Cancel") || inputMenu)
         {
+            inputMenu = false;
             if (Game_menu.activeSelf)
             {
                 Game_menu.SetActive(false);
@@ -32,9 +34,9 @@ public class GameManager : MonoBehaviour
             {
                 Game_menu.SetActive(true);
                 Time.timeScale = 0;
-            }
-                
+            }     
         }
+
     }
     public void GameExit()
     {

@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class TouchManager : MonoBehaviour
 {
-   GameObject player;
-   PlayerMove playermove;
+    GameObject player;
+    GameObject menu;
+    PlayerMove playermove;
+    GameManager gamemanager;
 
     void Awake()
     {
-       player = GameObject.FindGameObjectWithTag("Player");
-       playermove = player.GetComponent<PlayerMove>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playermove = player.GetComponent<PlayerMove>();
+
+        menu = GameObject.FindGameObjectWithTag("Manager");
+        gamemanager = menu.GetComponent<GameManager>();
     }
 
     public void LeftDown()
@@ -42,6 +47,13 @@ public class TouchManager : MonoBehaviour
     {
         playermove.inputJump = true;
         Debug.Log("점프 클릭");
+    }
+
+    public void MenuClick()
+    {
+        Debug.Log(menu);
+        gamemanager.inputMenu = true;
+        Debug.Log("매뉴 클릭");
     }
 
 }

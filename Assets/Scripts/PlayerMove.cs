@@ -27,8 +27,8 @@ public class PlayerMove : MonoBehaviour
 
     void Update() //단발적인 키 입력
     {
-        //점프 PC
-        if (Input.GetButton("Jump") && !anim.GetBool("Player_jump"))
+        //점프
+        if ((Input.GetButton("Jump") || inputJump) && !anim.GetBool("Player_jump"))
         {
             inputJump = false;
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -36,24 +36,24 @@ public class PlayerMove : MonoBehaviour
         }
 
         //점프 버튼
-        if (inputJump && !anim.GetBool("Player_jump"))
+        /*if (inputJump && !anim.GetBool("Player_jump"))
         {
             inputJump = false;
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("Player_jump", true);
-        }
+        }*/
 
 
-        // PC 키를 떗을떄 속도 감속
-        if (Input.GetButtonUp("Horizontal")) {
+        // 키를 떗을떄 속도 감속
+        if (Input.GetButtonUp("Horizontal") || (inputLeft || inputRight)) {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
         }
 
-        // 버튼 키를 땟을때 속도 감속
+/*        // 버튼 키를 땟을때 속도 감속
         if (inputLeft && inputRight)
         {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
-        }
+        }*/
 
         // PC 스프라이트 플립 변경
         if (Input.GetButton("Horizontal")) {
@@ -88,11 +88,11 @@ public class PlayerMove : MonoBehaviour
         //버튼 조작
         if(inputLeft)
         {
-            rigid.AddForce(Vector2.left , ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.left * 2 , ForceMode2D.Impulse);
         }
         else if (inputRight)
         {
-            rigid.AddForce(Vector2.right, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.right * 2, ForceMode2D.Impulse);
         }
 
         if (rigid.velocity.x > maxSpeed) //오른쪽 최대 속도 제한
