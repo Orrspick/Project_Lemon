@@ -496,7 +496,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: c8f229a3716bc410f7bffc651291700d
+      Hash: c43ade89ff1248826c6e6725f774ada1
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMove
@@ -526,7 +526,7 @@ ScriptsOnlyBuild:
     className: TMP_ColorGradient
   - hash:
       serializedVersion: 2
-      Hash: 7d56645752455753d4d56b8f8de781ae
+      Hash: 085e711d4c517d185e59a3841e78d05e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -617,4 +617,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/Game1.unity
-  playerPath: C:/Users/ChoJell/Project_Lemon/dd2.1.apk
+  playerPath: "G:/\uAC1C\uBC1C \uBE4C\uB4DC/dd0.23.apk"

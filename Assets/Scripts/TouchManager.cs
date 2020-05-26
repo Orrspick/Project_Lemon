@@ -9,7 +9,7 @@ public class TouchManager : MonoBehaviour
     PlayerMove playermove;
     GameManager gamemanager;
 
-    void Awake()
+    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playermove = player.GetComponent<PlayerMove>();
