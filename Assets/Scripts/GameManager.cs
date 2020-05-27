@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
-    public GameObject Game_menu;
-    public GameObject Control_sets;
+    // 게임 진행
     public PlayerMove player;
     public GameObject[] Stages;
-
-    public int stageInfo;
     public int stageIndex;
-    public int time;
-    public int tottime;
+    public float LimitTime;
+
+    //UI
+    public GameObject Game_menu;
+    public GameObject Control_sets;
+    public Text UIStage;
+    public Text UITime;
+    public GameObject GameOverScreen;
+    
     
 
     public bool inputMenu = false;
@@ -23,7 +28,6 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(1280, 720, true); //해상도 고정
     }
 
-    // Update is called once per frame
     void Update()
     {
         // 게임 메뉴를 구현합니다.
@@ -36,15 +40,30 @@ public class GameManager : MonoBehaviour
             if (Game_menu.activeSelf)
             {
                 Game_menu.SetActive(false);
-                Time.timeScale = 1;
+                Time.timeScale = 1f;
             }
             else
             {
                 Game_menu.SetActive(true);
-                Time.timeScale = 0;
+                Time.timeScale = 0f;
             }     
         }
 
+        // 게임 시간을 체크합니다.
+        LimitTime -= Time.deltaTime;
+        UITime.text = "Time : " + Mathf.Round(LimitTime);
+        // 게임이 0초가 되었을때 작동합니다.
+        if(Mathf.Round(LimitTime) == 0)
+        {
+            player.OnDie();
+            Time.timeScale = 0f;
+            GameOverScreen.SetActive(true);
+        }
+        // 게임 재시작시 멈춤현상 해결
+        else
+        {
+            Time.timeScale = 1f;
+        }
     }
 
     public void NextStage()
@@ -56,10 +75,12 @@ public class GameManager : MonoBehaviour
             Stages[stageIndex].SetActive(true);
             PlayerNextStage();
             Debug.Log(stageIndex + "스테이지 이동됨");
+
+            UIStage.text = "Stage " + (stageIndex + 1);
         }
         else
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
             Debug.Log("게임 클리어");
         }
     }
@@ -72,18 +93,26 @@ public class GameManager : MonoBehaviour
             collision.attachedRigidbody.velocity = Vector2.zero;
             collision.transform.position = new Vector3(-8, 2, 0);
             player.OnDie();
-
+            Time.timeScale = 0f;
+            GameOverScreen.SetActive(true);
             Debug.Log("낙사");
         }
     }
 
     void PlayerNextStage()
     {
+        LimitTime = 60;
         player.transform.position = new Vector3(-8, 2, 0);
         player.VelocityZero();
     }
 
-    void GameExit()
+    public void Retry()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+
+    public void GameExit()
     {
         Application.Quit();
     }

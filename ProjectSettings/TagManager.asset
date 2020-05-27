@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Manager
   - Next
+  - time
+  - Stage
   layers:
   - Default
   - TransparentFX
