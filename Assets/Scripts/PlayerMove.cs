@@ -35,10 +35,26 @@ public class PlayerMove : MonoBehaviour
             gameManager.NextStage();
 
         }
+        else if (collision.gameObject.tag == "Fake")
+        {
+
+        }
+        else if (collision.gameObject.tag == "FObject")
+        {
+            gameManager.ChageStage();
+        }
         else if (collision.gameObject.tag == "Finish")
         {
             //게임종료
             
+        }
+
+        if(collision.gameObject.tag == "Trap")
+        {
+            OnDie();
+            gameManager.GameOverScreen.SetActive(true);
+            
+            Debug.Log("함정");
         }
 
     }

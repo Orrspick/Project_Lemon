@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour
     // 게임 진행
     public PlayerMove player;
     public GameObject[] Stages;
+    public GameObject[] CStages;
     public int stageIndex;
+    public int cstageIndex;
     public float LimitTime;
 
     //UI
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
         if(stageIndex < Stages.Length-1)
         {
             Stages[stageIndex].SetActive(false);
+            CStages[cstageIndex].SetActive(false);
             stageIndex++;
             Stages[stageIndex].SetActive(true);
             PlayerNextStage();
@@ -85,13 +88,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ChageStage()
+    {
+        Stages[stageIndex].SetActive(false);
+        CStages[cstageIndex].SetActive(true);
+        Debug.Log(cstageIndex + "스테이지 변경됨");
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
 
             collision.attachedRigidbody.velocity = Vector2.zero;
-            collision.transform.position = new Vector3(-8, 2, 0);
+            //collision.transform.position = new Vector3(-8, 2, 0);
             player.OnDie();
             Time.timeScale = 0f;
             GameOverScreen.SetActive(true);
@@ -102,7 +112,7 @@ public class GameManager : MonoBehaviour
     void PlayerNextStage()
     {
         LimitTime = 60;
-        player.transform.position = new Vector3(-8, 2, 0);
+        player.transform.position = new Vector3(-17, -1, 0);
         player.VelocityZero();
     }
 

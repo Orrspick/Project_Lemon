@@ -8,6 +8,9 @@ TagManager:
   - Next
   - time
   - Stage
+  - Fake
+  - FObject
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -19,7 +22,7 @@ TagManager:
   - 
   - Platform
   - Manager
-  - 
+  - Trap
   - 
   - 
   - 
