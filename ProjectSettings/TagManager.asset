@@ -11,6 +11,9 @@ TagManager:
   - Fake
   - FObject
   - Trap
+  - Trigger1
+  - Trigger2
+  - ExStage
   layers:
   - Default
   - TransparentFX

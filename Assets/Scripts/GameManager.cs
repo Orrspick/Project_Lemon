@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
     public PlayerMove player;
     public GameObject[] Stages;
     public GameObject[] CStages;
+    public GameObject[] IStages;
     public int stageIndex;
     public int cstageIndex;
+    public int istageIndex;
     public float LimitTime;
 
     //UI
@@ -52,7 +54,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 게임 시간을 체크합니다.
-        LimitTime -= Time.deltaTime;
+        LimitTime -= Time.deltaTime * Time.timeScale;
         UITime.text = "Time : " + Mathf.Round(LimitTime);
         // 게임이 0초가 되었을때 작동합니다.
         if(Mathf.Round(LimitTime) == 0)
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour
         // 게임 재시작시 멈춤현상 해결
         else
         {
-            Time.timeScale = 1f;
+            //Time.timeScale = 1f;
         }
     }
 
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
         {
             Stages[stageIndex].SetActive(false);
             CStages[cstageIndex].SetActive(false);
+            IStages[istageIndex].SetActive(false);
             stageIndex++;
             Stages[stageIndex].SetActive(true);
             PlayerNextStage();
@@ -93,6 +96,12 @@ public class GameManager : MonoBehaviour
         Stages[stageIndex].SetActive(false);
         CStages[cstageIndex].SetActive(true);
         Debug.Log(cstageIndex + "스테이지 변경됨");
+    }
+
+    public void InsertStage(int i)
+    {
+        istageIndex = i;
+        IStages[istageIndex].SetActive(true);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

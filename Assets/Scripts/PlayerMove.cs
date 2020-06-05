@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using Packages.Rider.Editor;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -19,6 +22,10 @@ public class PlayerMove : MonoBehaviour
     public bool inputRight = false;
     public bool inputJump = false;
 
+    //플레이어 이동시 사용할 변수
+    public bool nextSOF = false;
+    public bool nextSOS = false;
+    
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -35,10 +42,6 @@ public class PlayerMove : MonoBehaviour
             gameManager.NextStage();
 
         }
-        else if (collision.gameObject.tag == "Fake")
-        {
-
-        }
         else if (collision.gameObject.tag == "FObject")
         {
             gameManager.ChageStage();
@@ -46,17 +49,36 @@ public class PlayerMove : MonoBehaviour
         else if (collision.gameObject.tag == "Finish")
         {
             //게임종료
-            
         }
 
         if(collision.gameObject.tag == "Trap")
         {
             OnDie();
+            Time.timeScale = 0f;
             gameManager.GameOverScreen.SetActive(true);
-            
             Debug.Log("함정");
         }
 
+        if(collision.gameObject.tag == "Trigger1")
+        {
+            nextSOF = true;
+            collision.enabled = false;
+            Debug.Log("1활성화됨 " + collision.enabled + " " + nextSOF + " " + nextSOS);
+            if ((nextSOF && nextSOS) == true)
+            {
+                gameManager.InsertStage(0);
+            }
+        }
+        if(collision.gameObject.tag == "Trigger2")
+        {
+            nextSOS = true;
+            collision.enabled = false;
+            Debug.Log("2활성화됨 " + collision.enabled + " " + nextSOF + " " + nextSOS);
+            if ((nextSOF && nextSOS) == true)
+            {
+                gameManager.InsertStage(0);
+            }
+        }
     }
 
     void Update() //단발적인 키 입력
@@ -107,6 +129,7 @@ public class PlayerMove : MonoBehaviour
         {
             rigid.AddForce(Vector2.right * 2, ForceMode2D.Impulse);
         }
+
     }
 
     void FixedUpdate() //지속적인 키 입력
@@ -150,5 +173,7 @@ public class PlayerMove : MonoBehaviour
     {
         rigid.velocity = Vector2.zero;
     }
+
+
 
 }
