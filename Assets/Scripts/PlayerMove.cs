@@ -23,8 +23,8 @@ public class PlayerMove : MonoBehaviour
     public bool inputJump = false;
 
     //플레이어 이동시 사용할 변수
-    public bool nextSOF = false;
-    public bool nextSOS = false;
+    private bool nextSOF = false;
+    private bool nextSOS = false;
     
     private void Awake()
     {
@@ -42,11 +42,11 @@ public class PlayerMove : MonoBehaviour
             gameManager.NextStage();
 
         }
-        else if (collision.gameObject.tag == "FObject")
+        if (collision.gameObject.tag == "FObject")
         {
             gameManager.ChageStage();
         }
-        else if (collision.gameObject.tag == "Finish")
+        if (collision.gameObject.tag == "Finish")
         {
             //게임종료
         }
@@ -78,6 +78,24 @@ public class PlayerMove : MonoBehaviour
             {
                 gameManager.InsertStage(0);
             }
+        }
+        
+        if(collision.gameObject.tag == "addTime")
+        {
+            collision.gameObject.SetActive(false);
+            gameManager.AddTime();
+        }
+
+        if(collision.gameObject.tag == "JNext")
+        {
+            transform.position = new Vector3(-182, -25, 0);
+        }
+
+        if (collision.gameObject.tag == "INext")
+        {
+            collision.enabled = false;
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            gameManager.InsertStage(1);
         }
     }
 

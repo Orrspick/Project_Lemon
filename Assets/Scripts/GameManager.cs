@@ -63,11 +63,6 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
             GameOverScreen.SetActive(true);
         }
-        // 게임 재시작시 멈춤현상 해결
-        else
-        {
-            //Time.timeScale = 1f;
-        }
     }
 
     public void NextStage()
@@ -102,6 +97,11 @@ public class GameManager : MonoBehaviour
     {
         istageIndex = i;
         IStages[istageIndex].SetActive(true);
+    }
+
+    public void AddTime()
+    {
+        LimitTime += 20;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
