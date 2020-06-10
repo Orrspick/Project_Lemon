@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverScreen;
     
     
-
     public bool inputMenu = false;
 
     private void Awake()

@@ -42,10 +42,12 @@ public class PlayerMove : MonoBehaviour
             gameManager.NextStage();
 
         }
+
         if (collision.gameObject.tag == "FObject")
         {
             gameManager.ChageStage();
         }
+
         if (collision.gameObject.tag == "Finish")
         {
             //게임종료
@@ -69,6 +71,7 @@ public class PlayerMove : MonoBehaviour
                 gameManager.InsertStage(0);
             }
         }
+
         if(collision.gameObject.tag == "Trigger2")
         {
             nextSOS = true;
@@ -94,7 +97,6 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "INext")
         {
             collision.enabled = false;
-            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             gameManager.InsertStage(1);
         }
     }
@@ -132,7 +134,6 @@ public class PlayerMove : MonoBehaviour
 
 
         // 에니메이션
-        // 에니메이션이 안풀리는 버그 발생함.
         if(Mathf.Abs(rigid.velocity.x) < 0.3)
             anim.SetBool("Player_walk", false);
         else
