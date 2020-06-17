@@ -1,9 +1,13 @@
-﻿using Packages.Rider.Editor;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+/* 
+ * 주석 처리된 코드는 사용할 예정이 있으나 현제로써는 사용을 안하는것
+ * 또는 삭제 예정인 코드임
+ */
 
 public class PlayerMove : MonoBehaviour
 {
@@ -14,6 +18,7 @@ public class PlayerMove : MonoBehaviour
     SpriteRenderer spriteRenderer; // 스프라이트2D 제어
     Animator anim;
     CapsuleCollider2D capsuleCollider;
+
    /* private int jumpCount = 0;
     [SerializeField] int jumpMaxCount = 2;*/
 
@@ -32,6 +37,7 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -55,9 +61,7 @@ public class PlayerMove : MonoBehaviour
 
         if(collision.gameObject.tag == "Trap")
         {
-            OnDie();
-            Time.timeScale = 0f;
-            gameManager.GameOverScreen.SetActive(true);
+            OnDie(true);
             Debug.Log("함정");
         }
 
@@ -99,6 +103,13 @@ public class PlayerMove : MonoBehaviour
             collision.enabled = false;
             gameManager.InsertStage(1);
         }
+
+        if (collision.gameObject.tag == "CheckPoint")
+        {
+            collision.enabled = false;
+            gameManager.GameSave();
+            gameManager.EventText(0);
+        }
     }
 
     void Update() //단발적인 키 입력
@@ -112,7 +123,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         // 키를 떗을떄 속도 감속
-        if (Input.GetButtonUp("Horizontal") || (inputLeft || inputRight)) {
+        if (Input.GetButtonUp("Horizontal") || (inputLeft && inputRight)) {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.4f, rigid.velocity.y);
         }
 
@@ -140,19 +151,22 @@ public class PlayerMove : MonoBehaviour
             anim.SetBool("Player_walk", true);
 
         //버튼 조작
-        if (inputLeft)
-        {
-            rigid.AddForce(Vector2.left * 2, ForceMode2D.Impulse);
-        }
-        else if (inputRight)
-        {
-            rigid.AddForce(Vector2.right * 2, ForceMode2D.Impulse);
-        }
+
 
     }
 
     void FixedUpdate() //지속적인 키 입력
     {
+
+        if (inputLeft)
+        {
+            rigid.AddForce(Vector2.left * 2.87f, ForceMode2D.Impulse);
+        }
+        else if (inputRight)
+        {
+            rigid.AddForce(Vector2.right * 2.87f, ForceMode2D.Impulse);
+        }
+
         //PC 조작
         float h = Input.GetAxisRaw("Horizontal");
         rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
@@ -180,19 +194,29 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    public void OnDie()
+    public void OnDie(bool c)
     {
-        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-        spriteRenderer.flipY = true;
-        capsuleCollider.enabled = false;
-        rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        if (c)
+        {
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            spriteRenderer.flipY = true;
+            capsuleCollider.enabled = false;
+            rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+            Time.timeScale = 0f;
+            gameManager.GameOverScreen.SetActive(true);
+        }
+        else
+        {
+            spriteRenderer.color = new Color(255, 255, 255, 255);
+            spriteRenderer.flipY = false;
+            capsuleCollider.enabled = true;
+            Time.timeScale = 1f;
+            gameManager.GameOverScreen.SetActive(false);
+        }
     }
 
     public void VelocityZero()
     {
         rigid.velocity = Vector2.zero;
     }
-
-
-
 }

@@ -17,6 +17,7 @@ TagManager:
   - addTime
   - INext
   - JNext
+  - CheckPoint
   layers:
   - Default
   - TransparentFX
