@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,11 +6,11 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+
 
 /* 
- * 주석 처리된 코드는 사용할 예정이 있으나 현제로써는 사용을 안하는것
- * 또는 삭제 예정인 코드임
+ * 주석 처리된 코드는 사용할 예정이 있으나 현제로써는 사용하지 않습니다.
+ * 또는 삭제 예정인 코드 입니다.
  */
 
 public class GameManager : MonoBehaviour
@@ -25,7 +24,9 @@ public class GameManager : MonoBehaviour
     public int cstageIndex;
     public int istageIndex;
     public float LimitTime = 99999;
-    public float Rtime = 9999;
+    public float Rtime = 9999f;
+    public float Ptime = 9999f;
+    public Image image;
 
     //UI
     public GameObject Game_main;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject Control_sets;
     public GameObject Upper_menu;
     public GameObject GameOverScreen;
+    public GameObject GameClearScreen;
     public Text UIStage;
     public Text UITime;
     public Text UIText;
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Screen.SetResolution(1280, 720, true); //해상도 고정
+        image.canvasRenderer.SetAlpha(0.0f);
     }
 
     void Update()
@@ -93,6 +96,13 @@ public class GameManager : MonoBehaviour
         {
             UIText.gameObject.SetActive(false);
         }
+
+        Ptime -= Time.deltaTime * Time.timeScale;
+        if(Mathf.Round(Ptime) == 0)
+        {
+            image.gameObject.SetActive(true);
+            StartCoroutine(TransferFade());
+        }
     }
 
     public void GameStart()
@@ -118,6 +128,13 @@ public class GameManager : MonoBehaviour
             Debug.Log(stageIndex + "스테이지 이동됨");
 
             UIStage.text = "Stage " + (stageIndex + 1);
+
+            if(stageIndex == 5)
+            {
+                Control_sets.SetActive(false);
+                Upper_menu.SetActive(false);
+                LimitTime = 9999;
+            }
         }
         else
         {
@@ -156,7 +173,7 @@ public class GameManager : MonoBehaviour
 
     public void AddTime()
     {
-        LimitTime += 20;
+        LimitTime += 25;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -238,7 +255,7 @@ public class GameManager : MonoBehaviour
         }
         else if(i == 1)
         {
-            UIText.text = "20초의 시간이 추가되었습니다.";
+            UIText.text = "시간이 추가되었습니다.";
             UIText.gameObject.SetActive(true);
         }
         else if(i == 2)
@@ -251,5 +268,34 @@ public class GameManager : MonoBehaviour
             UIText.text = "다른 길을 찾아보세요.";
             UIText.gameObject.SetActive(true);
         }
+        else if(i == 4)
+        {
+            UIText.text = "하나 남았습니다.";
+            UIText.gameObject.SetActive(true);
+        }
+        else if(i == 5)
+        {
+            UIText.text = "맵이 변했습니다.";
+            UIText.gameObject.SetActive(true);
+        }
     }
+
+    public void fadein()
+    {
+        image.CrossFadeAlpha(1, 0.33f, false);
+    }
+    public void fadeout()
+    {
+        image.CrossFadeAlpha(0, 1f, false);
+    }
+
+    IEnumerator TransferFade()
+    {
+        fadein();
+        yield return new WaitForSeconds(1f);
+        fadeout();
+        GameClearScreen.SetActive(true);
+        image.gameObject.SetActive(false);
+    }
+
 }

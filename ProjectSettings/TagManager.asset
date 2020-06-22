@@ -18,6 +18,8 @@ TagManager:
   - INext
   - JNext
   - CheckPoint
+  - EndingBlock
+  - FinshBlock
   layers:
   - Default
   - TransparentFX

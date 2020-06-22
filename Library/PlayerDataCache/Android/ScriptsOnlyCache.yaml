@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - CameraManager
     - GameManager
     - MovingPlatform
     - PlayerMove
@@ -23,10 +24,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -69,6 +68,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
     - Class: 95
@@ -86,21 +87,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11960}
     - Class: 114
-      Script: {instanceID: 12174}
+      Script: {instanceID: 12014}
     - Class: 114
-      Script: {instanceID: 12872}
+      Script: {instanceID: 12176}
+    - Class: 114
+      Script: {instanceID: 12874}
     - Class: 114
       Script: {instanceID: 13630}
     - Class: 114
-      Script: {instanceID: 13790}
-    - Class: 114
       Script: {instanceID: 13792}
     - Class: 114
-      Script: {instanceID: 14090}
+      Script: {instanceID: 13794}
     - Class: 114
-      Script: {instanceID: 14178}
+      Script: {instanceID: 14092}
     - Class: 114
-      Script: {instanceID: 14246}
+      Script: {instanceID: 14180}
+    - Class: 114
+      Script: {instanceID: 14248}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -318,6 +321,12 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
+      Hash: f788e422e24b37fc48bfb1c18ce68a4e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraManager
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -498,12 +507,6 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
-      Hash: 4ce15e99c635d2567873d27549d1f16f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FadeScript
-  - hash:
-      serializedVersion: 2
       Hash: ae83e830e7a90c0aff918c4c2e520825
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -514,6 +517,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
     className: BeforeAfterTestCommandState
+  - hash:
+      serializedVersion: 2
+      Hash: 607c339ed336b77d5d7521b70d751851
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FadeManager
   - hash:
       serializedVersion: 2
       Hash: c43ade89ff1248826c6e6725f774ada1
@@ -552,7 +561,7 @@ ScriptsOnlyBuild:
     className: TMP_ColorGradient
   - hash:
       serializedVersion: 2
-      Hash: ef4b202a2c0dc05e77e4fe64c8893914
+      Hash: 3c1a33600b64d7c1c982341c8c2c5743
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -643,4 +652,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/Game1.unity
-  playerPath: "G:/\uAC1C\uBC1C \uBE4C\uB4DC/dd0.25.apk"
+  playerPath: "G:/\uAC1C\uBC1C \uBE4C\uB4DC/dd0.3 Demo R Ver6.apk"

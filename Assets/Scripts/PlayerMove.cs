@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /* 
- * 주석 처리된 코드는 사용할 예정이 있으나 현제로써는 사용을 안하는것
- * 또는 삭제 예정인 코드임
+ * 주석 처리된 코드는 사용할 예정이 있으나 현제로써는 사용하지 않습니다.
+ * 또는 삭제 예정인 코드 입니다.
  */
 
 public class PlayerMove : MonoBehaviour
@@ -18,6 +18,8 @@ public class PlayerMove : MonoBehaviour
     SpriteRenderer spriteRenderer; // 스프라이트2D 제어
     Animator anim;
     CapsuleCollider2D capsuleCollider;
+    
+    GameObject player;
 
    /* private int jumpCount = 0;
     [SerializeField] int jumpMaxCount = 2;*/
@@ -30,6 +32,10 @@ public class PlayerMove : MonoBehaviour
     //플레이어 이동시 사용할 변수
     private bool nextSOF = false;
     private bool nextSOS = false;
+
+    private float PTime = 99999f;
+    private float FTime = 99999f;
+ 
     
     private void Awake()
     {
@@ -37,9 +43,13 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
-
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
+    private void Start()
+    {
+        
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Next")
@@ -52,6 +62,7 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "FObject")
         {
             gameManager.ChageStage();
+            gameManager.EventText(5);
         }
 
         if (collision.gameObject.tag == "Finish")
@@ -72,7 +83,12 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("1활성화됨 " + collision.enabled + " " + nextSOF + " " + nextSOS);
             if ((nextSOF && nextSOS) == true)
             {
+                gameManager.EventText(2);
                 gameManager.InsertStage(0);
+            }
+            else
+            {
+                gameManager.EventText(4);
             }
         }
 
@@ -83,7 +99,12 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("2활성화됨 " + collision.enabled + " " + nextSOF + " " + nextSOS);
             if ((nextSOF && nextSOS) == true)
             {
+                gameManager.EventText(2);
                 gameManager.InsertStage(0);
+            }
+            else
+            {
+                gameManager.EventText(4);
             }
         }
         
@@ -91,17 +112,20 @@ public class PlayerMove : MonoBehaviour
         {
             collision.gameObject.SetActive(false);
             gameManager.AddTime();
+            gameManager.EventText(1);
         }
 
         if(collision.gameObject.tag == "JNext")
         {
             transform.position = new Vector3(-182, -25, 0);
+            gameManager.EventText(2);
         }
 
         if (collision.gameObject.tag == "INext")
         {
             collision.enabled = false;
             gameManager.InsertStage(1);
+            gameManager.EventText(2);
         }
 
         if (collision.gameObject.tag == "CheckPoint")
@@ -109,6 +133,19 @@ public class PlayerMove : MonoBehaviour
             collision.enabled = false;
             gameManager.GameSave();
             gameManager.EventText(0);
+        }
+
+        if(collision.gameObject.tag == "EndingBlock")
+        {
+            collision.enabled = false;
+            FTime = 7f;
+            PTime = 5f;
+            inputLeft = true;
+        }
+
+        if(collision.gameObject.tag == "FinshBlock")
+        {
+            gameManager.Ptime = 2.3f;
         }
     }
 
@@ -133,7 +170,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         // 버튼 스프라이트 플립 변경
-        // 버튼 조작후 키보드 조작시 스프라이트 플립이 반대가 되는경우가 있는데 같은 사용하는 경우는 없으니 무시
+
         if (inputLeft)
         {
             transform.localScale = new Vector3(-1, 1, 1);
@@ -150,21 +187,30 @@ public class PlayerMove : MonoBehaviour
         else
             anim.SetBool("Player_walk", true);
 
-        //버튼 조작
+        PTime -= Time.deltaTime * Time.timeScale;
+        if (Mathf.Round(PTime) == 0)
+        {
+            inputLeft = false;
+            
+        }
 
+        FTime -= Time.deltaTime * Time.timeScale;
+        if (Mathf.Round(FTime) == 0)
+        {
+            player.SetActive(false);
 
+        }
     }
 
     void FixedUpdate() //지속적인 키 입력
     {
-
         if (inputLeft)
         {
-            rigid.AddForce(Vector2.left * 2.87f, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.left * 2.9f, ForceMode2D.Impulse);
         }
         else if (inputRight)
         {
-            rigid.AddForce(Vector2.right * 2.87f, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.right * 2.9f, ForceMode2D.Impulse);
         }
 
         //PC 조작
@@ -192,6 +238,7 @@ public class PlayerMove : MonoBehaviour
                 //Debug.Log(rayHit.collider.name);
             }
         }
+
     }
 
     public void OnDie(bool c)
@@ -219,4 +266,5 @@ public class PlayerMove : MonoBehaviour
     {
         rigid.velocity = Vector2.zero;
     }
+
 }
