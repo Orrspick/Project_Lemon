@@ -1,4 +1,4 @@
-# Project_Lemon ( _프로젝트 종료_)
+# Project_Lemon (_ 프로젝트 종료 _)
 
 Build info
 
